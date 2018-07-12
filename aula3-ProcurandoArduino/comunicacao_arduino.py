@@ -2,11 +2,17 @@
 
 import serial
 import time
+from platform import system
 
-nome = 'COM'
+
+# Checking platform
+if (system() == 'Windows'):
+    nome = 'COM'
+elif (system() == 'Linux'):
+    nome = '/dev/ttyACM'
 arduino_encontrado = False
 
-for numero in range(1, 20):
+for numero in range(0, 20):
     porta = nome + str(numero)
     try:
         print("Tentando porta {}".format(numero))
