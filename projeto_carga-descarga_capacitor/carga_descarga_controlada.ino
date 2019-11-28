@@ -1,5 +1,7 @@
-int chave_carga=7;
-int chave_descarga=6;
+int chave_carga=6;
+int chave_descarga=7;
+int pino_rele1=10;
+int pino_rele2=11;
 
 bool ligar_rele = LOW;
 bool desligar_rele = ~ligar_rele;
@@ -23,12 +25,37 @@ void tratador(String cmd){
    *  3 - 3 segundos carregado
    */
   char carga = cmd[0];
-  String duracao_tempo_str = cmd.substring(1);
+  char rele1 = cmd[1];
+  char rele2 = cmd[2];
+  String duracao_tempo_str = cmd.substring(3);
   int duracao_tempo = duracao_tempo_str.toInt();
   int rele_escolhido = (carga == 'c') ? chave_carga : chave_descarga;
+  if(rele1 == '1'){
+    digitalWrite (pino_rele1, ligar_rele);
+    Serial.println("Rele 1 ligado");
+  }else{
+    digitalWrite (pino_rele1, desligar_rele);
+    Serial.println("Rele 1 desligado");
+  }
+  Serial.print("Rele 1: ");
+  Serial.println(rele1);
+
+
+  if(rele2 == '1'){
+    digitalWrite (pino_rele2, ligar_rele);
+    Serial.println("Rele 2 ligado");
+  }else{
+    digitalWrite (pino_rele2, desligar_rele);
+    Serial.println("Rele 2 desligado");
+  }
+  Serial.print("Rele 2: ");
+  Serial.println(rele2);
+
+  
   Serial.print("Rele escolhido: ");
   Serial.println(rele_escolhido);
-  
+
+ 
   digitalWrite ( rele_escolhido, ligar_rele);
   delay(duracao_tempo*1000);
   digitalWrite ( rele_escolhido, desligar_rele);
